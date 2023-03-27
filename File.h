@@ -3,19 +3,20 @@
 #include <fstream>
 #include <string>
 
+#include "Instruction.h"
+
+
 using namespace std;
 
-#include "Pipeline.h"
 
 class File{
 
     private:
-        ifstream *file;
+        static ifstream *file;
         int start_instruction;
-        Pipeline pipeline;
 
     public:
-        File(string filePath, int start_instruction, const Pipeline& pl);
+        File(string filePath, int start_instruction);
         ~File();
-        void GetCompletedInstructions();
+        static Instruction ReadLine();
 };

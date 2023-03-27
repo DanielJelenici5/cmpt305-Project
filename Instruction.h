@@ -16,21 +16,21 @@ class Instruction{
     private:
         int program_counter;
         InstructionType instruciton_type;
-        vector<int> *dependencies;
+        vector<int> dependencies;
 
     public:
-        Instruction(int program_counter, InstructionType it);
+        Instruction(int program_counter, int it);
         ~Instruction();
         int getProgramCounter() const;
         InstructionType getInstructionType() const;
-        vector<int> * getDependencies() const;
+        const vector<int>& getDependencies() const;
         void addDependency(int depen);
 
         friend std::ostream& operator<<(std::ostream& os, const Instruction& instr) {
             os << "Instruction: Program Counter=" << hex << instr.program_counter
             << ", Type=" << instr.instruciton_type
             << ", Dependencies=[ ";
-            for (auto dep : *(instr.dependencies)) {
+            for (auto dep : (instr.dependencies)) {
                 os << hex << dep << " ";
             }
             os << "]";

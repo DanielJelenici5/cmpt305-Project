@@ -15,7 +15,7 @@
 #include <string>
 
 
-#include "File.h"
+#include "Pipeline.h"
 
 using namespace std;
 
@@ -29,10 +29,12 @@ int main(int argc, char* argv[]){
    
 		//TODO: Add error checks
 
-		Pipeline pipeline(pipeline_width);
-		File file(file_path, start_inst, pipeline);
-		file.GetCompletedInstructions();
+		Pipeline pipeline(start_inst,run_inst, pipeline_width);
+		File file(file_path, start_inst);
+		pipeline.GetCompletedInstructions();
+		cout << "all previous instrucitons: " << endl;
 		pipeline.printAllInstructionsDependecies();
+		pipeline.Process_IF();
 	}
 	else printf("Insufficient number of arguments provided!\n");
    

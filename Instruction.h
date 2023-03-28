@@ -17,14 +17,18 @@ class Instruction{
         int program_counter;
         InstructionType instruciton_type;
         vector<int> dependencies;
+        bool lastInstruction;
+        int lineNumber;
 
     public:
-        Instruction(int program_counter, int it);
+        Instruction(int program_counter = 0, int it = 0, int lineNumber = 0);
         ~Instruction();
         int getProgramCounter() const;
         InstructionType getInstructionType() const;
         const vector<int>& getDependencies() const;
         void addDependency(int depen);
+        void setLastInstruction();
+        bool isLastInstruction() const;
 
         friend std::ostream& operator<<(std::ostream& os, const Instruction& instr) {
             os << "Instruction: Program Counter=" << hex << instr.program_counter
@@ -33,7 +37,8 @@ class Instruction{
             for (auto dep : (instr.dependencies)) {
                 os << hex << dep << " ";
             }
-            os << "]";
+            os << "], "
+            << "line number: " <<  std::dec << instr.lineNumber;
         return os;
     }
 };

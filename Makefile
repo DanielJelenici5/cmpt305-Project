@@ -2,7 +2,7 @@ CXX = g++
 CXXFLAGS = -std=c++11 -Wall
 SRCS = project_solution.cpp Instruction.cpp File.cpp Pipeline.cpp
 OBJS = $(SRCS:.cpp=.o)
-HEADER = Instruction.h File.h Pipeline.h
+HEADER = Instruction.h File.h Pipeline.h SimException.h
 EXECUTABLE = proj
 
 all: $(EXECUTABLE)

@@ -14,6 +14,7 @@ class File{
     private:
         static ifstream *file;
         int start_instruction;
+        static int currentLineNumber;
 
     public:
         File(string filePath, int start_instruction);

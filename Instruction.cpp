@@ -5,9 +5,11 @@
 using namespace std;
 
 
-Instruction::Instruction(int program_counter, int it){
+Instruction::Instruction(int program_counter, int it, int lineNumber){
     this->program_counter = program_counter;
     this->instruciton_type = static_cast<InstructionType>(it);
+    this->lastInstruction = false;
+    this->lineNumber = lineNumber;
 }
 
 Instruction::~Instruction(){
@@ -28,4 +30,14 @@ const vector<int>& Instruction::getDependencies() const{
 void Instruction::addDependency(int depen){
     this->dependencies.push_back(depen);
 }
+
+void Instruction::setLastInstruction(){
+    this->lastInstruction = true;
+}
+
+bool Instruction::isLastInstruction() const{
+    return this->lastInstruction;
+}
+
+
 

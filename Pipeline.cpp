@@ -1,30 +1,39 @@
 #include <stdio.h>
 #include <vector>
+#include <map>
 #include <iostream>
+#include <algorithm>
 
 #include "Pipeline.h"
 #include "SimException.h"
 
+using namespace std;
 
 //----------------------------------------------------------PRIVATE----------------------------------------------------------//
 
 bool Pipeline::DependenciesCompletedCheck(const Instruction& instr){
     vector <int> dependencies = instr.getDependencies();
     for(int dependency : dependencies){
-        auto it = this->completedInstructions->find(dependency);
-        if(it == this->completedInstructions->end()){
+        auto it = this->completedInstructions.find(dependency);
+        if(it == this->completedInstructions.end()){
             //dependency not completed
             return false;
         }
     }
+
     return true;
+}
+
+void Pipeline::printSet(unordered_set<int> mySet){
+    for (auto it = mySet.begin(); it != mySet.end(); ++it) {
+        std::cout << *it << " ";
+    }
+    std::cout << std::endl;
 }
 
 //----------------------------------------------------------PUBLIC----------------------------------------------------------//
 
 Pipeline::Pipeline(int start_instruction, int instructions_to_run, int width){
-    this->completedInstructions = new map<int, vector <int>>;
-    this->ongoingInstructions = new map<int, vector <int>>;
     this->width = width;
     this->start_instruction = start_instruction;
     this->branch_lock = false;
@@ -56,33 +65,12 @@ bool Pipeline::getEndSim() const{
 void Pipeline::addToInstructions(const Instruction& instr, bool ongoing){
     vector <int> vec = instr.getDependencies();
     int PC = instr.getProgramCounter();
-    auto it = this->completedInstructions->find(PC);
-    auto itOnGoing = this->ongoingInstructions->find(PC);
 
     if(ongoing == false){
-        if (itOnGoing != this->ongoingInstructions->end()) {
-            // Key exists in the ongoing instruction map but it is not completed
-            this->ongoingInstructions->erase(itOnGoing);
-        }
-        if(it != this->completedInstructions->end()) {
-            // Key already exists, update the value
-            it->second = vec;
-        } else {
-            // Key doesn't exist, insert a new pair
-            this->completedInstructions->emplace(PC, vec);
-        }
+        this->completedInstructions.insert(PC);
     }
     else{ //instruction is ongoing
-        if (it != this->completedInstructions->end()) {
-            // Key exists in the completed instruction map and since we want the last instance of the instruction delete the previous completed one
-            this->completedInstructions->erase(it);
-        }
-
-        if(itOnGoing != this->ongoingInstructions->end()) {
-            itOnGoing->second = vec;
-        } else {
-            this->ongoingInstructions->emplace(PC, vec);
-        }
+        this->ongoingInstructions.insert(PC);
     }
  
 }
@@ -92,30 +80,6 @@ void Pipeline::FindCompletedInstructions(){
         Instruction instr = File::ReadLine();
         addToInstructions(instr, false);
         
-    }
-}
-
-const vector<int>& Pipeline::getAllDependeciesForPC(int pc){
-    return this->completedInstructions->at(pc);
-}
-
-void Pipeline::printInstructionsDependecies(bool completed){
-    map<int, vector <int>> *instructions;
-    if(completed){
-        instructions = this->completedInstructions;
-        cout << "All completed instructions: " << endl;
-    }
-    else{
-        instructions = this->ongoingInstructions;
-        cout << "All ongoing instructions: " << endl;
-    }
-
-    for (auto it = instructions ->begin(); it != instructions ->end(); it++) {
-        cout << "pc: " << hex << it->first << ", Dependencies=[ ";
-            for (auto dep : (it->second)) {
-                cout << hex << dep << " ";
-            }
-            cout << "]" << endl;
     }
 }
 

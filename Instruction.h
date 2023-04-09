@@ -26,6 +26,7 @@ class Instruction{
         int getProgramCounter() const;
         InstructionType getInstructionType() const;
         const vector<int>& getDependencies() const;
+        int getLineNumber() const;
         void addDependency(int depen);
         void setLastInstruction();
         bool isLastInstruction() const;

@@ -27,6 +27,10 @@ const vector<int>& Instruction::getDependencies() const{
     return this->dependencies;
 }
 
+int Instruction::getLineNumber() const{
+    return lineNumber;
+}
+
 void Instruction::addDependency(int depen){
     this->dependencies.push_back(depen);
 }

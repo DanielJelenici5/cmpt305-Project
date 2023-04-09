@@ -2,6 +2,8 @@
 #include <vector>
 #include <map>
 #include <queue>
+#include <unordered_set>
+
 
 #include "File.h"
 
@@ -10,8 +12,8 @@ using namespace std;
 
 class Pipeline{
     private:
-        map<int, vector <int>> *completedInstructions;
-        map<int, vector <int>> *ongoingInstructions;
+        unordered_set<int> completedInstructions;
+        unordered_set<int> ongoingInstructions;
         int width;
         int start_instruction;
         int instructions_to_run;
@@ -41,6 +43,8 @@ class Pipeline{
         map<InstructionType, int> stats;
 
         bool DependenciesCompletedCheck(const Instruction& instr);
+
+        void printSet(unordered_set<int> mySet);
 
     public: 
         Pipeline(int start_instruction,int instructions_to_run, int width);

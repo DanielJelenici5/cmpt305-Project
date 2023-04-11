@@ -34,6 +34,21 @@ void PrintReport(Pipeline& pipeline, int cycles){
 	printf("%.2f%% are store instructions\n", ((float)(pipeline.getStat(Store))/sum)* 100);
 }
 
+// void PrintReport(Pipeline &pipeline, int cycles) {
+//   int sum = pipeline.getAllSumStats();
+
+//   //   printf("Total execution time, Integer instructions, "
+//   //          "Floating point instructions, Branch instructions, Load
+//   //          instructions, " "Store instructions\n");
+
+//   printf("%d,%.2f,%.2f,%.2f,%.2f,%.2f\n", cycles,
+//          ((float)(pipeline.getStat(Integer_Instruction)) / sum) * 100,
+//          ((float)(pipeline.getStat(Floating_Point_Instruction)) / sum) * 100,
+//          ((float)(pipeline.getStat(Branch)) / sum) * 100,
+//          ((float)(pipeline.getStat(Load)) / sum) * 100,
+//          ((float)(pipeline.getStat(Store)) / sum) * 100);
+// }
+
 void Simulation(Pipeline& pipeline){
 
 	int cycle = 0;

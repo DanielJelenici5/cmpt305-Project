@@ -23,7 +23,7 @@ InstructionType Instruction::getInstructionType() const{
     return this->instruciton_type;
 }
 
-const vector<int>& Instruction::getDependencies() const{
+const vector<unsigned long int>& Instruction::getDependencies() const{
     return this->dependencies;
 }
 

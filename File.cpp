@@ -45,7 +45,7 @@ Instruction File::ReadLine() {
             row.push_back(token);  // add the token to the row vector
         }
 
-        Instruction instr( stoul(row.at(0), nullptr, 16), stoi(row.at(1)), File::currentLineNumber);
+        Instruction instr( stoul(row.at(0), nullptr, 16), stoul(row.at(1)), File::currentLineNumber);
         for(long unsigned int i = 2; i < row.size(); i++){
             instr.addDependency(stoul(row.at(i), nullptr, 16));
         }
@@ -53,4 +53,5 @@ Instruction File::ReadLine() {
         return instr;
     }
     //TODO:throw exception
+    throw SimException("File not open");
 }

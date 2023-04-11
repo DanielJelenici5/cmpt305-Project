@@ -100,7 +100,7 @@ void Pipeline::Process_IF(){
         } catch (SimException& ex){
             //end of file
             this->end_sim = true;
-            throw ex;
+            return;
         }      
 
         addToInstructions(instr, true);

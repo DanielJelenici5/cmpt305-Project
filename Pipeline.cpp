@@ -12,7 +12,7 @@ using namespace std;
 //----------------------------------------------------------PRIVATE----------------------------------------------------------//
 
 bool Pipeline::DependenciesCompletedCheck(const Instruction& instr){
-    vector <int> dependencies = instr.getDependencies();
+    vector <unsigned long int> dependencies = instr.getDependencies();
     for(int dependency : dependencies){
         auto it = this->completedInstructions.find(dependency);
         if(it == this->completedInstructions.end()){
@@ -63,7 +63,7 @@ bool Pipeline::getEndSim() const{
 }
 
 void Pipeline::addToInstructions(const Instruction& instr, bool ongoing){
-    vector <int> vec = instr.getDependencies();
+    vector <unsigned long int> vec = instr.getDependencies();
     int PC = instr.getProgramCounter();
 
     if(ongoing == false){
@@ -97,12 +97,11 @@ void Pipeline::Process_IF(){
         try{
             instr = File::ReadLine();
             this->instrucitons_ran++;
-        } catch (SimException ex){
+        } catch (SimException& ex){
+            //end of file
             this->end_sim = true;
-            //TODO: think of somerthing to do here as we might not want to abruptly end sim as some instructins might still be in queus/processes
-            return;
-        }
-        
+            throw ex;
+        }      
 
         addToInstructions(instr, true);
 

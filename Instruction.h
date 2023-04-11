@@ -16,7 +16,7 @@ class Instruction{
     private:
         int program_counter;
         InstructionType instruciton_type;
-        vector<int> dependencies;
+        vector<unsigned long int> dependencies;
         bool lastInstruction;
         int lineNumber;
 
@@ -25,7 +25,7 @@ class Instruction{
         ~Instruction();
         int getProgramCounter() const;
         InstructionType getInstructionType() const;
-        const vector<int>& getDependencies() const;
+        const vector<unsigned long int>& getDependencies() const;
         int getLineNumber() const;
         void addDependency(int depen);
         void setLastInstruction();
